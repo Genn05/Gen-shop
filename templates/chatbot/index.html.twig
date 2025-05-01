@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chatbot Assistant{% endblock %}
+
+{% block body %}
+    <h1>Chatbot d'assistance</h1>
+
+    <div id="chat-box" class="mb-4">
+        {% if userMessage %}
+            <p><strong>Vous :</strong> {{ userMessage }}</p>
+        {% endif %}
+
+        {% if response is not empty %}
+            {% if response starts with 'Erreur' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ response }}
+                </div>
+            {% else %}
+                <p><strong>Bot :</strong> {{ response }}</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <form id="chat-form" action="{{ path('app_dashboard_chatbot') }}" method="post" class="mb-3">
+        <textarea name="message" id="message" placeholder="Posez votre question..." class="form-control mb-2" required></textarea>
+        <button type="submit" class="btn btn-primary" id="send-btn">Envoyer</button>
+    </form>
+
+    <div id="loading-message" style="display:none;">
+        <p><strong>Envoi en cours...</strong> Veuillez patienter.</p>
+    </div>
+
+    <a href="{{ path('app_dashboard') }}" class="btn btn-secondary">Retour au Dashboard</a>
+
+    <script>
+        // Gestion de l'affichage du message de chargement
+        const form = document.getElementById('chat-form');
+        const loadingMessage = document.getElementById('loading-message');
+        const sendButton = document.getElementById('send-btn');
+
+        form.addEventListener('submit', function () {
+            loadingMessage.style.display = 'block'; // Afficher le message de chargement
+            sendButton.disabled = true; // Désactiver le bouton pour éviter de soumettre plusieurs fois
+        });
+    </script>
+{% endblock %}
