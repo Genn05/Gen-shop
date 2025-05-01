@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des utilisateurs</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.roles | join(', ') }}</td>
+                    <td>
+                        <a href="{{ path('app_dashboard_edit_user', {'id': user.id}) }}">Modifier</a>
+                        
+                        <a href="{{ path('app_dashboard_delete_user', {'id': user.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">Supprimer</a>
+                        
+                        <a href="{{ path('app_dashboard_edit_user', {'id': user.id}) }}">Modifier les rôles</a>
+
+
+                    </td>
+                    <td>
+                        {% for role in user.roles %}
+                        <span>{{ role }}</span>
+                        <a href="{{ path('app_dashboard_remove_role', {'id': user.id, 'role': role}) }}">Supprimer ce rôle</a>
+                        {% endfor %}
+                    </td>
+
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

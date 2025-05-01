@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Modifier les informations de l'utilisateur {{ user.email }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword) }}
+        {{ form_row(form.roles) }}
+        <button type="submit">Sauvegarder les modifications</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_dashboard_users') }}">Retour à la gestion des utilisateurs</a>
+{% endblock %}

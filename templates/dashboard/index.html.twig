@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue, {{ user.email }} !</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>Vous êtes un administrateur.</p>
+    {% else %}
+        <p>Vous êtes un utilisateur normal.</p>
+    
+    {% endif %}
+      <p>Rôles de l'utilisateur : {{ app.user.roles|join(', ') }}</p> <!-- Affiche les rôles de l'utilisateur -->
+    
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_dashboard_users') }}">Gestion des utilisateurs</a>
+    {% else %}
+        <p>Vous n'avez pas accès à cette fonctionnalité.</p>
+    {% endif %}
+{% endblock %}
